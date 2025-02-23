@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blockchain Monitor Pro</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="loading-overlay">
+        <div class="loading-container">
+            <div class="uiverse-loader"></div>
+            <p>Loading Blockchain Data...</p>
+        </div>
+    </div>
+
+    <div class="container">
+        <header>
+            <h1 class="cyber-title">Blockchain Monitor Pro</h1>
+            <div class="status-bar">
+                <span class="connection-status">● Online</span>
+                <span>Last Update: <span id="last-update"></span></span>
+                <span id="current-time"></span>
+            </div>
+            <div class="search-bar">
+                <input type="text" id="search-input" class="uiverse-input" placeholder="Search coin (e.g., bitcoin)">
+                <button id="search-button" class="uiverse-button">Search</button>
+                <button id="export-button" class="uiverse-button">Export Data</button>
+            </div>
+        </header>
+
+        <section id="price-ticker" class="fade-in cyber-section">
+            <h2>Real-Time Prices</h2>
+            <div id="ticker-list" class="ticker-grid"></div>
+        </section>
+
+        <section id="trending-coins" class="fade-in cyber-section">
+            <h2>Trending Coins</h2>
+            <div id="trending-list" class="ticker-grid"></div>
+        </section>
+
+        <div id="results-container" class="fade-in cyber-section"></div>
+
+        <section class="stats-grid fade-in cyber-section" id="blockchain-stats">
+            <!-- Populated by JS -->
+        </section>
+
+        <section class="grid-container fade-in cyber-section collapsible" data-section="blocks-txs">
+            <h2>Blocks & Transactions <span class="toggle">▼</span></h2>
+            <div class="collapsible-content">
+                <div class="column">
+                    <h3>Latest Blocks</h3>
+                    <div id="blocks-list" class="scroll-container"></div>
+                </div>
+                <div class="column">
+                    <h3>Latest Transactions</h3>
+                    <div id="transactions-list" class="scroll-container"></div>
+                </div>
+            </div>
+        </section>
+
+        <section class="chart-container fade-in cyber-section collapsible" data-section="chart">
+            <h2>Transaction Volume (24h) <span class="toggle">▼</span></h2>
+            <div class="collapsible-content">
+                <canvas id="transactionChart"></canvas>
+            </div>
+        </section>
+
+        <section class="stats-grid fade-in cyber-section collapsible" data-section="network">
+            <h2>Network Health <span class="toggle">▼</span></h2>
+            <div class="collapsible-content" id="network-health"></div>
+        </section>
+
+        <section class="stats-grid fade-in cyber-section" id="block-time-tracker">
+            <h2>Block Time Tracker</h2>
+            <div id="block-time-list" class="ticker-grid"></div>
+        </section>
+
+        <section class="stats-grid fade-in cyber-section" id="dark-pool-txs">
+            <h2>Dark Pool Transactions</h2>
+            <div id="dark-pool-list" class="scroll-container"></div>
+        </section>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        // Update current time
+        function updateTime() {
+            document.getElementById('current-time').textContent = new Date().toLocaleTimeString();
+        }
+        setInterval(updateTime, 1000);
+        updateTime();
+
+        // Toggle collapsible sections
+        document.querySelectorAll('.collapsible h2').forEach(header => {
+            header.addEventListener('click', () => {
+                const section = header.parentElement;
+                const content = section.querySelector('.collapsible-content');
+                const toggle = header.querySelector('.toggle');
+                content.style.display = content.style.display === 'none' ? 'block' : 'none';
+                toggle.textContent = content.style.display === 'none' ? '▶' : '▼';
+            });
+        });
+    </script>
+</body>
+</html>
